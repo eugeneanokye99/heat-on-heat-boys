@@ -18,5 +18,22 @@ services:
       timeout: 5s
       retries: 5
 
+  etl:
+    build:
+      context: ./data-engineering
+      dockerfile: Dockerfile
+    container_name: servicehub-etl
+    command: ["python", "etl_pipeline.py"]
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
 volumes:
   pgdata:
