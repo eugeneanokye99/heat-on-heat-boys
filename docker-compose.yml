@@ -2,8 +2,6 @@ version: "3.8"
 
 services:
   postgres:
-    env_file:
-      - .env
     image: postgres:17-alpine
     container_name: servicehub-db
     environment:
