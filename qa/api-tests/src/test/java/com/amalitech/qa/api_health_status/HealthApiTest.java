@@ -49,5 +49,31 @@ public class HealthApiTest {
                 .body("message", equalTo("OK"));
     }
 
+//    Testing to confirm if the health endpoint returns timestamp when status code is 200
+    @Test
+    public void testHealthEndpointReturnsTimestamp() {
+        given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/health")
+                .then()
+                .statusCode(200)
+                .body("timestamp", notNullValue());
+    }
+
+    //    Testing to confirm if the health endpoint returns all body fields when status code is 200
+    @Test
+    public void testHealthEndpointReturnsAllFields() {
+        given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/health")
+                .then()
+                .statusCode(200)
+                .body("status", equalTo("UP"))
+                .body("message", equalTo("OK"))
+                .body("timestamp", notNullValue());
+    }
+
 
 }
