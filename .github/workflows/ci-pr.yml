@@ -1,0 +1,25 @@
+name: PR CI
+
+on:
+    pull_request:
+        branches: [main]
+        paths:
+            - backend/**
+            - .github/workflows/**
+
+concurrency:
+    group: pr-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+
+jobs:
+    ci:
+        name: Backend PR checks
+        uses: ./.github/workflows/ci-reusable.yml
+        with:
+            run_checkstyle: true
+            run_tests: true
+            build_image: false
+        secrets: inherit
