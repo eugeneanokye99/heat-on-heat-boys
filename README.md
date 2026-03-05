@@ -28,6 +28,10 @@ Hook sources live in `ops-engine-room/git-hooks/`.
 		`../ops-engine-room/git-hooks/pre-commit.py` to `../.git/hooks/pre-commit`
 		and `../ops-engine-room/git-hooks/commit-msg.py` to `../.git/hooks/commit-msg`
 		and marks it executable.
+	- This runs via the Maven profile `local-git-hooks`, which auto-activates only when
+		`ops-engine-room/git-hooks/pre-commit.py` exists.
+	- In Docker/CI contexts where those files are not present in the build context,
+		the profile stays inactive, so packaging does not fail.
 
 The pre-commit hook runs monorepo path-based checks:
 
