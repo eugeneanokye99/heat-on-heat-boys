@@ -61,7 +61,7 @@ public class HealthApiTest {
                 .body("timestamp", notNullValue());
     }
 
-    //    Testing to confirm if the health endpoint returns all body fields when status code is 200
+    //    Testing to confirm if the health endpoint returns all required body fields when status code is 200
     @Test
     public void testHealthEndpointReturnsAllFields() {
         given()
@@ -75,6 +75,17 @@ public class HealthApiTest {
                 .body("timestamp", notNullValue());
     }
 
+    //    Testing to confirm if the health endpoint is still accessible without token
+    @Test
+    public void testHealthEndpointIsPubliclyAccessible() {
+        // No auth token — should still return 200 since /api/health is permitAll()
+        given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/health")
+                .then()
+                .statusCode(200);
+    }
 
 
 }
